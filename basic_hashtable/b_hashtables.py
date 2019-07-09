@@ -15,7 +15,9 @@ class Pair:
 # '''
 class BasicHashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.count = 0
+        self.elements = [None] * capacity
 
 
 # '''
@@ -23,7 +25,10 @@ class BasicHashTable:
 # Research and implement the djb2 hash function
 # '''
 def hash(string, max):
-    pass
+    djb2 = 5381
+    for s in string:
+        djb2 = (hash*33)+ ord(s)
+    return djb2 % max
 
 
 # '''
