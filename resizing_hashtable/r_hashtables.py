@@ -17,14 +17,18 @@ class LinkedPair:
 # '''
 class HashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
 
 # '''
 # Research and implement the djb2 hash function
 # '''
 def hash(string, max):
-    pass
+    hashed = 5381
+    for s in string:
+        hashed = (hashed * 33) + ord(s)
+    return hashed % max
 
 
 # '''
@@ -34,6 +38,15 @@ def hash(string, max):
 # '''
 def hash_table_insert(hash_table, key, value):
     pass
+    i = hash(key, hash_table.capacity)
+    element = LinkedPair(key, value)
+    current = hash_table.storage[i]
+
+    if current is not None:
+        current.next = element
+        hash_table.storage[i] = element
+    else:
+        hash_table.storage[i] = element
 
 
 # '''
@@ -42,7 +55,17 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
+    i = hash(key, hash_table.capacity)
+    current = hash_table.storage[i]
+
+    if current is None:
+        print(f'Warning! {key} is not in the hash table')
+    elif len(current) > 1:
+        for x in current:
+            if x == key:
+                x = None
+    else:
+        current = None
 
 
 # '''
@@ -51,7 +74,10 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    i = hash(key, hash_table.capacity)
+    current = hash_table.storage[i]
+
+    return current.value if current.next is None else current.next
 
 
 # '''
