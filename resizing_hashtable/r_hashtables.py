@@ -8,6 +8,7 @@ class LinkedPair:
         self.key = key
         self.value = value
         self.next = None
+        
 
 
 # '''
@@ -19,6 +20,7 @@ class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
+        self.count = 0
 
 
 # '''
@@ -39,14 +41,29 @@ def hash(string, max):
 def hash_table_insert(hash_table, key, value):
     pass
     i = hash(key, hash_table.capacity)
-    element = LinkedPair(key, value)
-    current = hash_table.storage[i]
 
-    if current is not None:
-        current.next = element
-        hash_table.storage[i] = element
+    if hash_table.storage[i] == None:
+        hash_table.storage[i] = LinkedPair(key, value)
+        hash_table.count += 1
+
     else:
-        hash_table.storage[i] = element
+        temp = hash_table.storage[i]
+        if temp.key == key:
+            hash_table.storage[i].value = value
+            return None
+        else:
+            while temp.next != None:
+                temp = temp.next
+                if temp.key == key:
+                    temp.value = value
+                    return None
+        temp.next = LinkedPair(key, value)
+        hash_table.count += 1
+
+    if hash_table.count >= 0.8*hash_table.capacity:
+        hash_table = hash_table_resize(hash_table)
+
+    return None
 
 
 # '''
@@ -60,12 +77,24 @@ def hash_table_remove(hash_table, key):
 
     if current is None:
         print(f'Warning! {key} is not in the hash table')
-    elif len(current) > 1:
-        for x in current:
-            if x == key:
-                x = None
+        return None
+
     else:
-        current = None
+        temp = hash_table.storage[i]
+
+        if temp.next != None:
+            while temp.next != None:
+                if temp.next.key == key:
+                    temp.next = temp.next.next
+                    hash_table.count -= 1
+                    break
+                temp = temp.next
+        else:
+            if temp.key == key:
+                hash_table.storage[i] = None
+
+                return None
+    return None
 
 
 # '''
@@ -75,20 +104,31 @@ def hash_table_remove(hash_table, key):
 # '''
 def hash_table_retrieve(hash_table, key):
     i = hash(key, hash_table.capacity)
-    current = hash_table.storage[i]
 
-    return current.value if current.next is None else current.next
+    if hash_table.storage[i] != None:
+        temp = hash_table.storage[i]
 
+        while temp != None:
+            if temp.key == key:
+                return temp.value
+            temp = temp.next
+
+    return None
 
 # '''
 # Fill this in
 # '''
 def hash_table_resize(hash_table):
-    pass
+    new_table = HashTable(hash_table.capacity*2)
+
+    # for i in range(hash_table.capacity):
+    #     old = hash_table_retrieve(hash_table, hash_table.storage[i])
+    #     hash_table_insert(new_table, i.key, i.value)
+    return new_table
 
 
 def Testing():
-    ht = HashTable(2)
+    ht = HashTable(1)
 
     hash_table_insert(ht, "line_1", "Tiny hash table")
     hash_table_insert(ht, "line_2", "Filled beyond capacity")
