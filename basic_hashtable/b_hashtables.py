@@ -17,7 +17,7 @@ class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.count = 0
-        self.elements = [None] * capacity
+        self.storage = [None] * capacity
 
 
 # '''
@@ -39,12 +39,12 @@ def hash(string, max):
 def hash_table_insert(hash_table, key, value):
     i = hash(key, hash_table.capacity)
     element = Pair(key, value)
-    existing = hash_table.elements[i]
+    existing = hash_table.storage[i]
     
     if existing is not None:
         print(f'Warning! You are overwring a key at {i}')
     
-    hash_table.elements[i] = element
+    hash_table.storage[i] = element
 
 
 # '''
@@ -54,12 +54,12 @@ def hash_table_insert(hash_table, key, value):
 # '''
 def hash_table_remove(hash_table, key):
     i = hash(key, hash_table.capacity)
-    existing = hash_table.elements[i]
+    existing = hash_table.storage[i]
 
-    if hash_table.elements[i] is None:
+    if hash_table.storage[i] is None:
         print(f'Warning! {key} is not in the hash table')
     else:
-        hash_table.elements[i] = None
+        hash_table.storage[i] = None
 
 
 # '''
@@ -69,7 +69,7 @@ def hash_table_remove(hash_table, key):
 # '''
 def hash_table_retrieve(hash_table, key):
     i = hash(key, hash_table.capacity)
-    element = hash_table.elements[i]
+    element = hash_table.storage[i]
 
     return element.value if element is not None else None
 
