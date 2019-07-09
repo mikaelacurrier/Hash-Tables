@@ -1,8 +1,3 @@
-
-
-# '''
-# Linked List hash table key/value pair
-# '''
 class LinkedPair:
     def __init__(self, key, value):
         self.key = key
@@ -11,11 +6,6 @@ class LinkedPair:
         
 
 
-# '''
-# Fill this in
-
-# Resizing hash table
-# '''
 class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
@@ -23,9 +13,7 @@ class HashTable:
         self.count = 0
 
 
-# '''
-# Research and implement the djb2 hash function
-# '''
+
 def hash(string, max):
     hashed = 5381
     for s in string:
@@ -33,11 +21,7 @@ def hash(string, max):
     return hashed % max
 
 
-# '''
-# Fill this in.
 
-# Hint: Used the LL to handle collisions
-# '''
 def hash_table_insert(hash_table, key, value):
     pass
     i = hash(key, hash_table.capacity)
@@ -66,11 +50,6 @@ def hash_table_insert(hash_table, key, value):
     return None
 
 
-# '''
-# Fill this in.
-
-# If you try to remove a value that isn't there, print a warning.
-# '''
 def hash_table_remove(hash_table, key):
     i = hash(key, hash_table.capacity)
     current = hash_table.storage[i]
@@ -97,11 +76,6 @@ def hash_table_remove(hash_table, key):
     return None
 
 
-# '''
-# Fill this in.
-
-# Should return None if the key is not found.
-# '''
 def hash_table_retrieve(hash_table, key):
     i = hash(key, hash_table.capacity)
 
@@ -115,15 +89,9 @@ def hash_table_retrieve(hash_table, key):
 
     return None
 
-# '''
-# Fill this in
-# '''
+
 def hash_table_resize(hash_table):
     new_table = HashTable(hash_table.capacity*2)
-
-    # for i in range(hash_table.capacity):
-    #     old = hash_table_retrieve(hash_table, hash_table.storage[i])
-    #     hash_table_insert(new_table, i.key, i.value)
     return new_table
 
 
